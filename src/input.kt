@@ -1,6 +1,6 @@
 import java.io.File
 
-data class Lib(val libid:Int,val bookPerDay:Int, val signUpTime:Int,val booksList:MutableList<Book>,var maxScore:Int=0)
+data class Lib(val libid:Int,val bookPerDay:Int, val signUpTime:Int,val booksList: java.util.ArrayList<Book>,var maxScore:Int=0,var priority:Int=0)
 data class Book(val id:Int,val  score:Int)
 
 fun main() {
@@ -15,8 +15,11 @@ val file = File("abc.txt")
     val map = (0 until libraries)
         .map { i ->
             val libINfo = readLines[i + 2].split(" ").map { it.toInt() }
-            val bookInLib = readLines[i + 3].split(" ").map { it.toInt() }.map { Book(it, scoresList[it]) }.toMutableList()
-            Lib(libINfo[2], libINfo[1], bookInLib)
+            val bookInLib= arrayListOf<Book>()
+           readLines[i + 3].split(" ").map { it.toInt() }.map { Book(it, scoresList[it]) }.toMutableList().forEach {
+               bookInLib.add(it)
+           }
+            Lib(i,libINfo[2], libINfo[1], bookInLib,0)
         }
 
 }
